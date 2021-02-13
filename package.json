@@ -13,7 +13,12 @@
     "web-vitals": "2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "run-p start:dev start:api start:picture start:fileApi",
+    "start:dev": "cross-env REACT_APP_API_URL=http://localhost:3001 REACT_APP_PICTURE_SERVER_URL=http://localhost:8080 REACT_APP_FILE_SERVER_URL=http://localhost:8082 react-scripts start",
+    "prestart:api": "node tools/api/createMockDb.js",
+    "start:api": "node tools/api/apiServer.js",
+    "start:picture": "http-server tools/pictures",
+    "start:fileApi": "node tools/fileApi/fileServer.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -35,5 +40,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "7.0.3",
+    "express": "4.17.3",
+    "express-fileupload": "1.1.7-alpha.3",
+    "http-server": "14.1.0",
+    "json-server": "0.17.0",
+    "npm-run-all": "4.1.5"
   }
 }
